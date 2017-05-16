@@ -115,6 +115,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GridBoard.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SudokuC.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="samplesudoku1.txt" />
+    <Text Include="samplesudoku2.txt" />
+    <Text Include="samplesudoku3.txt" />
+    <Text Include="samplesudoku4.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
