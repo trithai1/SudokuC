@@ -1,4 +1,6 @@
 #include "GridBoard.h"
+#include <random>
+#include <time.h>
 
 GridBoard::GridBoard(ifstream& file)
 {
@@ -45,32 +47,111 @@ void GridBoard::TextToBoard(ifstream& fin)
 //Prints the Grid
 void GridBoard::PrintBoard()
 {
-	for (int row=0; row<9; row++)
+	for (int row = 0; row < 9; row++)
 	{
-		for (int col=0; col<9; col++)
+		for (int col = 0; col < 9; col++)
 		{
 			cout << Grid[row][col] << " ";
 		}
 		cout << endl;
 	}
+	cout << endl;
 }
 
 void GridBoard::PlaceNum()
 {
+	srand(time(NULL));
+	int randNum = rand() % 9 + 1;
 }
 
 bool GridBoard::CheckRow()
 {
 	int numList[9] = { 1,2,3,4,5,6,7,8,9 };
-	return false;
+	int *test;
+
+	for (int row = 0; row < 9; row++)
+	{
+		for (int col = 0; col < 9; col++)
+		{
+			test = find(begin(numList), end(numList), Grid[row][col]);
+			if (test == end(numList) && Grid[row][col] != 0)
+			{
+				return false;
+			}
+
+			if (test != end(numList))
+			{
+				*test = -1;
+			}			
+		}
+
+		for (int x = 0; x < 9; x++)
+		{
+			numList[x] = x+1;
+		}
+	}
+	return true;
 }
 
 bool GridBoard::CheckCol()
 {
-	return false;
+	int numList[9] = { 1,2,3,4,5,6,7,8,9 };
+	int *test;
+
+	for (int col = 0; col < 9; col++)
+	{
+		for (int row = 0; row < 9; row++)
+		{
+			test = find(begin(numList), end(numList), Grid[row][col]);
+			if (test == end(numList) && Grid[row][col] != 0)
+			{
+				return false;
+			}
+
+			if (test != end(numList))
+			{
+				*test = -1;
+			}
+		}
+
+		for (int x = 0; x < 9; x++)
+		{
+			numList[x] = x + 1;
+		}
+	}
+	return true;
 }
 
 bool GridBoard::CheckSubGrid()
 {
-	return false;
+	int numList[9] = { 1,2,3,4,5,6,7,8,9 };
+	int *test;
+	for (int irow = 0; irow < 9; irow += 3)
+	{
+		for (int icol = 0; icol < 9; icol += 3)
+		{
+			for (int row = irow; row < irow+3; row++)
+			{
+				for (int col = icol; col < icol+3; col++)
+				{
+					test = find(begin(numList), end(numList), Grid[row][col]);
+					if (test == end(numList) && Grid[row][col] != 0)
+					{
+						return false;
+					}
+
+					if (test != end(numList))
+					{
+						*test = -1;
+					}
+				}
+			}
+
+			for (int x = 0; x < 9; x++)
+			{
+				numList[x] = x + 1;
+			}
+		}
+	}
+	return true;
 }

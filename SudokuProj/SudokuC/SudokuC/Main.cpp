@@ -11,6 +11,7 @@ int main() {
 	file.open("samplesudoku1.txt");
 	GridBoard* Sudoku = new GridBoard(file);
 	Sudoku->PrintBoard();
+	Sudoku->PlaceNum();
 
 	system("pause");
 	return 0;
