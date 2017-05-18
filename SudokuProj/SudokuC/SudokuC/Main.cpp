@@ -12,6 +12,7 @@ int main() {
 	GridBoard* Sudoku = new GridBoard(file);
 	Sudoku->PrintBoard();
 	Sudoku->PlaceNum();
+	Sudoku->PrintBoard();
 
 	system("pause");
 	return 0;

@@ -58,11 +58,17 @@ void GridBoard::PrintBoard()
 	cout << endl;
 }
 
+/*Solves the Sudoku using recursion.
+First it searches for a zero in the sudoku and store's it's location. While the sudoku is incomplete and the list is not empty, it goes through a list of numbers from 1 to 9
+and deletes the first number if the number is invalid. It keeps deleting until it finds a valid number.
+If there is no valid number, it assigns the value as zero.
+If there is a valid number, it assigns the value to that number and deletes it from the list, then runs PlaceNum() again.
+If the list is empty and the sudoku is incomplete, get the value to zero.*/
 void GridBoard::PlaceNum()
 {
 	vector<int> numList = { 1,2,3,4,5,6,7,8,9 };
-	vector<int>::iterator test = find(numList.begin(), numList.end(), 3);
-	int pos = test - numList.begin();
+	//vector<int>::iterator test = find(numList.begin(), numList.end(), 3);
+	//int pos = test - numList.begin();
 	int row, col;
 	//int numList[9] = { 1,2,3,4,5,6,7,8,9 };
 	//srand(time(NULL));
@@ -80,7 +86,7 @@ void GridBoard::PlaceNum()
 		{
 			while (found == false && c < 9)
 			{
-				if (Grid[r][c] != 0)
+				if (Grid[r][c] == 0)
 				{
 					row = r;
 					col = c;
@@ -88,12 +94,34 @@ void GridBoard::PlaceNum()
 				}
 				c++;
 			}
+			c = 0;
 			r++;
 		}
 
-		while (!CheckComplete())
+		while (!CheckComplete() && numList.size() != 0)
 		{
-			
+			while (numList.size() != 0 && !ValidComplete(numList[0], row, col))
+			{
+				numList.erase(numList.begin());
+			}
+
+			if (numList.size() != 0)
+			{
+				Grid[row][col] = numList[0];
+				numList.erase(numList.begin());
+				//system("CLS");
+				//PrintBoard();
+				PlaceNum();
+			}
+			else
+			{
+				Grid[row][col] = 0;
+			}
+		}
+
+		if (!CheckComplete() && numList.size() == 0)
+		{
+			Grid[row][col] = 0;
 		}
 	}
 }
